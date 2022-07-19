@@ -1,0 +1,36 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: seata-demo-web
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.168.1.201:8848
+  main:
+    allow-circular-references: true
+
+
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: default_tx_group
+  enable-auto-data-source-proxy: true
+  config:
+    type: nacos
+    nacos:
+      namespace:
+      serverAddr: 10.168.1.201:8848
+      group: SEATA_GROUP
+      userName: "nacos"
+      password: "nacos"
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 10.168.1.201:8848
+      namespace:
+      userName: "nacos"
+      password: "nacos"

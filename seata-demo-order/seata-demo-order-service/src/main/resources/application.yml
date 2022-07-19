@@ -1,0 +1,47 @@
+server:
+  port: 8088
+spring:
+  application:
+    name: orders-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.168.1.201:3306/seata-demo?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    show-sql: true
+    database: mysql
+    open-in-view: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.168.1.201:8848
+  main:
+    allow-circular-references: true
+
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: default_tx_group
+  enable-auto-data-source-proxy: true
+  config:
+    type: nacos
+    nacos:
+      namespace:
+      serverAddr: 10.168.1.201:8848
+      group: SEATA_GROUP
+      userName: "nacos"
+      password: "nacos"
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 10.168.1.201:8848
+      namespace:
+      userName: "nacos"
+      password: "nacos"
